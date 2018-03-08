@@ -1,0 +1,91 @@
+plugins {
+    id 'groovy'
+    id 'application'
+}
+
+group 'po'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    groups = [
+            run : 'customrun'
+    ]
+    clientMainClassTemplate = 'po.app.Client'
+    clientMaskName = 'runClient'
+}
+
+dependencies {
+
+    // INSIDE INTERACTIONS
+    compile project(':repository')
+    //------------------------------------------------------------------------------------------//
+
+    // APPLICATION
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    //------------------------------------------------------------------------------------------//
+
+    // APPLICATION SERVER
+    compile fileTree(dir:'/opt/servers/wildfly/v11.0.0/bin/client', include: 'jboss-client.jar')
+    //------------------------------------------------------------------------------------------//
+
+    // TEST
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.apache.derby', name: 'derby', version: "$DERBY_CLIENT_VERSION"
+    //------------------------------------------------------------------------------------------//
+
+    // LOG
+    compile 'log4j:log4j:1.2.17'
+    //------------------------------------------------------------------------------------------//
+
+    // DB INTERACTIONS (min configuration)
+    compile "org.hibernate:hibernate-core:$HIBERNATE_VERSION"
+    compile "org.hibernate:hibernate-entitymanager:$HIBERNATE_VERSION"
+    //------------------------------------------------------------------------------------------//
+
+    // WSDL & REST
+    compile 'com.sun.xml.ws:jaxws-rt:2.3.0'
+    // only WSDL
+    compile files("$projectDir/src/main/java/lib")
+    // only REST
+    compile "org.glassfish.jersey.core:jersey-client:$JERSEY_VERSION"
+    compile "org.glassfish.jersey.inject:jersey-hk2:$JERSEY_VERSION"
+    compile "org.glassfish.jersey.media:jersey-media-jaxb:$JERSEY_VERSION"
+    // only REST (json conversion)
+    compile "org.glassfish.jersey.media:jersey-media-json-jackson:$JERSEY_VERSION"
+
+    //------------------------------------------------------------------------------------------//
+}
+
+// GET WEBSERVICE
+task getWebService( type : Exec ) {
+    commandLine 'wsimport', '-d', "$projectDir/src/main/java/lib", '-verbose', 'http://localhost:8080/galaxy/RecordProcessingWebService?wsdl'
+}
+
+// DEPLOY -> JBoss WildFly
+task checkdeploy (group : groups.run, dependsOn : ':web:deploy') { }
+
+/**
+ * RUN CLIENT
+ */
+/**
+ * tasks :  runClientWSDL
+ *          runClientJNDI
+ *          runClientEntityManager
+ *          runClientREST
+ */
+tasks.addRule("Pattern : runClient<Type> - Run specific client") { String taskName ->
+    if (taskName.startsWith( clientMaskName )) {
+        task(taskName) {
+            doFirst {
+                checkdeploy.execute()
+                mainClassName = clientMainClassTemplate + taskName - clientMaskName
+                if (taskName.contains('WSDL')) { getWebService.execute() }
+            }
+            finalizedBy run
+        }
+    }
+}

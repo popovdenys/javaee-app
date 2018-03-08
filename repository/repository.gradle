@@ -1,0 +1,16 @@
+/**
+ * JavaEE Application : Repository
+ */
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':model')
+    compile 'com.h2database:h2:1.4.196'
+
+    // needed only for EntityManager calls
+    compile "org.apache.derby:derbyclient:$DERBY_CLIENT_VERSION"
+    compile "mysql:mysql-connector-java:$MYSQL_CONNECTION_VERSION"
+}

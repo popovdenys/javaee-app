@@ -1,0 +1,45 @@
+/**
+ * JavaEE Application multiproject builds
+ */
+
+ext.projectIds = [
+		group : 'po.po'
+		, version : '0.1'
+	]
+
+allprojects {
+	group = projectIds.group
+	version =projectIds.version
+}
+
+subprojects {
+	apply plugin: 'java'
+//	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+
+	sourceCompatibility = 1.9
+
+	repositories {
+		mavenCentral()
+	}
+
+	ext {
+		JUNIT_VERSION = '4.12'
+		HIBERNATE_VERSION = '5.3.0.CR1'
+		DERBY_CLIENT_VERSION = '10.14.1.0'
+		MYSQL_CONNECTION_VERSION = '5.1.45'
+		JERSEY_VERSION = '2.26'
+	}
+
+	dependencies {
+		// This dependency is found on compile classpath of this component and consumers.
+		compile 'com.google.guava:guava:23.0'
+		// compile 'org.slf4j:slf4j-api:1.8.0-beta1' // todo why is it a problem ?
+		testCompile 'org.slf4j:slf4j-log4j12:1.8.0-beta1'
+
+		// Use JUnit test framework
+		testCompile "junit:junit:$JUNIT_VERSION"
+
+		compile ("org.jboss.spec:jboss-javaee-all-7.0:1.1.1.Final")
+	}
+}

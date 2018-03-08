@@ -1,0 +1,56 @@
+/**
+ * JavaEE Application : Web project
+ */
+
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+
+    ivy {
+        name 'jQuery'
+        url 'http://code.jquery.com'
+        layout 'pattern', {
+            artifact '[module]-[revision](.[classifier]).[ext]'
+        }
+    }
+}
+
+configurations {
+    jquery
+}
+
+dependencies {
+    compile project(':repository')
+
+    compile 'javax.servlet:jstl:1.2'
+
+    compile 'org.json:json:20180130'
+
+    // Use servlet api
+    // compile 'javax:javaee-web-api:8.0'
+
+    jquery group: 'jquery', name: 'jquery', version: '3.3.1', classifier: '', ext: 'js'
+}
+
+
+/**
+ * Get external libs
+ */
+task getExternalJQuery(type: Copy) {
+    from configurations.jquery
+    into "$webAppDir/interface/js/libs"
+}
+
+task deploy(type: Copy, group: 'deploy', description: 'deploy to WildFly') {
+    dependsOn getExternalJQuery
+    from war.outputs.files
+    into "/opt/servers/wildfly/v11.0.0/standalone/deployments"
+    rename { String fileName ->
+        'galaxy.war'
+    }
+    doLast {
+        println 'deploy to WildFly'
+    }
+}
+
