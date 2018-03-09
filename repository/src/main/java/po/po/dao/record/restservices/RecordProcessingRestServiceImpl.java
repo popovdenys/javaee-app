@@ -1,7 +1,7 @@
 package po.po.dao.record.restservices;
 
 import po.po.dao.exceptions.record.NoRecordException;
-import po.po.dao.exceptions.record.ServiceUnavailableException;
+import po.po.exceptions.ServiceUnavailableException;
 import po.po.dao.record.services.RecordProcessingServiceLocal;
 import po.po.domain.Record;
 
@@ -77,7 +77,7 @@ public class RecordProcessingRestServiceImpl {
 
             return Response.created(uri).build();
 
-        } catch (po.po.dao.exceptions.record.ServiceUnavailableException e) {
+        } catch (ServiceUnavailableException e) {
             return Response.status(504).build();
         }
     }

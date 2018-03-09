@@ -1,4 +1,4 @@
-package po.po.dao.exceptions.record;
+package po.po.exceptions;
 
 public class ServiceUnavailableException extends Exception {
 

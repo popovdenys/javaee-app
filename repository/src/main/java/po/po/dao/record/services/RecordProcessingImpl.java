@@ -15,7 +15,7 @@
 package po.po.dao.record.services;
 
 import po.po.dao.exceptions.record.NoRecordException;
-import po.po.dao.exceptions.record.ServiceUnavailableException;
+import po.po.exceptions.ServiceUnavailableException;
 import po.po.dao.record.dataaccess.RecordDAO;
 import po.po.domain.Record;
 import po.po.dataaccess.qualifiers.Production;

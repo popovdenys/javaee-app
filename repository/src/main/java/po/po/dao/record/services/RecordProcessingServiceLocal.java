@@ -15,7 +15,7 @@
 package po.po.dao.record.services;
 
 import po.po.dao.exceptions.record.NoRecordException;
-import po.po.dao.exceptions.record.ServiceUnavailableException;
+import po.po.exceptions.ServiceUnavailableException;
 import po.po.domain.Record;
 
 import javax.ejb.Local;
