@@ -1,5 +1,6 @@
-package po.po.chul;
+package po.po.chul.messaging.sender;
 
+import po.po.chul.messaging.sender.RecordControlService;
 import po.po.exceptions.ServiceUnavailableException;
 
 import javax.annotation.Resource;
@@ -11,7 +12,7 @@ import javax.jms.MapMessage;
 import javax.jms.Queue;
 
 @Stateless
-public class RecordControlServiceImpl implements  RecordControlService {
+public class RecordControlServiceImpl implements RecordControlService {
 
     @Inject
     JMSContext context;

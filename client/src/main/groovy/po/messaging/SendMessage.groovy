@@ -27,8 +27,8 @@ Connection connection = null
 
 try {
     Context ctx = new InitialContext(jndi)
-    Queue queue = ctx.lookup("jms/RecordsQueue")
-    // Topic topic = ctx.lookup("jms/RecordTopic")
+    // Queue queue = ctx.lookup("jms/RecordsQueue")
+    Topic topic = ctx.lookup("jms/RecordTopic")
 
     ConnectionFactory cf = (ConnectionFactory) ctx.lookup("jms/RemoteConnectionFactory")
     connection = cf.createConnection();
@@ -42,8 +42,8 @@ try {
     // send Map message
     1.upto(15) {
         priority = Math.round(it * Math.random() / 15 * 9 )
-        sendMapMessage(session, queue, priority)
-        // sendMapMessage(session, topic, priority)
+        // sendMapMessage(session, queue, priority)
+        sendMapMessage(session, topic, priority)
     }
 
     session?.commit()

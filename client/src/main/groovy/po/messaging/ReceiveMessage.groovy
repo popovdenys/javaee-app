@@ -22,8 +22,8 @@ Connection connection = null
 
 try {
     Context ctx = new InitialContext(jndi)
-     Queue queue = ctx.lookup("jms/RecordsQueue")
-    // Queue queue = ctx.lookup("jms/ExpiryQueue")
+    // Queue queue = ctx.lookup("jms/RecordsQueue")
+    Queue queue = ctx.lookup("jms/DLQ")
     Topic topic = ctx.lookup("jms/RecordTopic")
 
     ConnectionFactory cf = (ConnectionFactory) ctx.lookup("jms/RemoteConnectionFactory")
@@ -31,7 +31,7 @@ try {
 
     connection.setClientID("RecordProcessing")
 
-    Session session = connection.createSession(false, Session.DUPS_OK_ACKNOWLEDGE)
+    Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE)
 
     // receive text message
     // receiveTextMessage( session, queue, connection )
@@ -41,10 +41,10 @@ try {
     // userStoppedProgramm()
 
     // receive map message
-    alternativeReceiveMapMessage( session, queue, connection )
+    // alternativeReceiveMapMessage( session, queue, connection )
 
     // browser the queue
-    // browserTheQueue(session, queue)
+    browserTheQueue(session, queue)
 
 }
 catch (NamingException | JMSException e){ e.printStackTrace() }
@@ -116,6 +116,14 @@ private void browserTheQueue(Session session, Queue queue) {
 
         while (e.hasMoreElements()) {
             Message message = e.nextElement()
+            MapMessage mapMessage = message
+            Enumeration<String> names = mapMessage.getMapNames()
+            printf("Message # %d\n", messageCount)
+            while (names.hasMoreElements()) {
+                String k = names.nextElement()
+                Object v = mapMessage.getObject(k)
+                printf("%s : %s\n", k, v.toString())
+            }
             messageCount++
         }
 

@@ -1,4 +1,4 @@
-package po.po.chul;
+package po.po.chul.messaging.sender;
 
 import po.po.exceptions.ServiceUnavailableException;
 

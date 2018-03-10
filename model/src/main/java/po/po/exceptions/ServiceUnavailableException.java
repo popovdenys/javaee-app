@@ -1,5 +1,5 @@
 package po.po.exceptions;
 
-public class ServiceUnavailableException extends Exception {
+public class ServiceUnavailableException extends RuntimeException {
 
 }

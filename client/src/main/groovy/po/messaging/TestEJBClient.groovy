@@ -1,6 +1,6 @@
 package po.messaging
 
-import po.po.chul.RecordControlService
+import po.po.chul.messaging.sender.RecordControlService
 import po.po.exceptions.ServiceUnavailableException
 
 import javax.jms.Connection
