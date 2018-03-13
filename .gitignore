@@ -32,3 +32,4 @@ out/
 # test
 /test/**
 **/*.log
+**/*.war
