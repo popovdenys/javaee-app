@@ -1,6 +1,6 @@
 package po.java.messaging;
 
-import po.messaging.listeners.TextMessageListener;
+import po.java.messaging.TextMessageListener;
 
 import javax.jms.*;
 import javax.naming.Context;

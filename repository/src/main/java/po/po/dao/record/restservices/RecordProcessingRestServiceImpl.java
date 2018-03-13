@@ -35,12 +35,12 @@ public class RecordProcessingRestServiceImpl {
     //@Path( "{id1}-{id2}" )
     //public Response getRecordsBetween( @PathParam("id1") Long startId, @PathParam("id2") Long endId ) {
         if( (endId != null) && (startId < endId ) ) {
-            GenericEntity<List<Record>> records = new GenericEntity<>( service.getRecordsBetween(startId, endId) ) {};
+            GenericEntity<List<Record>> records = new GenericEntity<List<Record>>( service.getRecordsBetween(startId, endId) ) {};
             return Response.ok( records ).build();
         }
 
         if( endId == null ) {
-            GenericEntity<List<Record>> records = new GenericEntity<>( service.getRecords() ) {};
+            GenericEntity<List<Record>> records = new GenericEntity<List<Record>>( service.getRecords() ) {};
             return Response.ok( records ).build();
         }
         return Response.status(404).build();

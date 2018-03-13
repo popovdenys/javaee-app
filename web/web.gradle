@@ -45,7 +45,8 @@ task getExternalJQuery(type: Copy) {
 task deploy(type: Copy, group: 'deploy', description: 'deploy to WildFly') {
     dependsOn getExternalJQuery
     from war.outputs.files
-    into "/opt/servers/wildfly/v11.0.0/standalone/deployments"
+    into "$projectDir/../master/docker"
+    // into "/opt/servers/wildfly/v11.0.0/standalone/deployments"
     rename { String fileName ->
         'galaxy.war'
     }

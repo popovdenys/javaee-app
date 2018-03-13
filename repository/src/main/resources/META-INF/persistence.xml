@@ -12,7 +12,7 @@
         </properties>
     </persistence-unit>
 
-    <!--*******************DERBY*******************-->
+    <!--*******************DERBY*******************
     <persistence-unit name="chuldb-derby" transaction-type="JTA">
 
         <jta-data-source>java:/Chul</jta-data-source>
@@ -21,5 +21,5 @@
             <property name="hibernate.hbm2ddl.auto" value="update" />
         </properties>
     </persistence-unit>
-
+-->
 </persistence>

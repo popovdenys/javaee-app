@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+
+  galaxy:
+   image: popovdenys/wildfly
+   networks:
+     - javaee-network
+   ports:
+     - 80:8080
+     - 9990:9990
+   container_name: galaxy
+   depends_on:
+     - chuldb-mysql
+
+  chuldb-mysql:
+   image: popovdenys/mysql
+   networks:
+     - javaee-network
+   environment:
+     - MYSQL_ROOT_PASSWORD=popovdenys
+     - MYSQL_USER=popov
+     - MYSQL_PASSWORD=popovdenys
+     - MYSQL_DATABASE=chul
+#   volumes:
+#     - type=volume
+#     - source=mydata
+#     - target=/var/lib/mysql
+   container_name: chuldb-mysql
+
+
+networks:
+  javaee-network:
+
+#volumes:
+#  mydata:
