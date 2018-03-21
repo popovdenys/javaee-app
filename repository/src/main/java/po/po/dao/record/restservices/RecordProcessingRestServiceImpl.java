@@ -1,19 +1,22 @@
 package po.po.dao.record.restservices;
 
 import po.po.dao.exceptions.record.NoRecordException;
-import po.po.exceptions.ServiceUnavailableException;
 import po.po.dao.record.services.RecordProcessingServiceLocal;
 import po.po.domain.Record;
+import po.po.exceptions.ServiceUnavailableException;
 
+import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.servlet.annotation.WebServlet;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-// @Stateless
-// @RequestScoped
+//@Stateless
+//@RequestScoped
 @Path( "/records" )
 public class RecordProcessingRestServiceImpl {
 

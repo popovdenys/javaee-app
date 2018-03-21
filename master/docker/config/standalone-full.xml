@@ -528,12 +528,15 @@
             <server name="default-server">
                 <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
                 <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
+                <!--<host name="default-host" alias="localhost" default-web-module="galaxy.war" />-->
+
                 <host name="default-host" alias="localhost">
-                    <location name="/" handler="welcome-content"/>
+                    <location name="/galaxy/appwebservice/records" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
                     <filter-ref name="x-powered-by-header"/>
                     <http-invoker security-realm="ApplicationRealm"/>
                 </host>
+
             </server>
             <servlet-container name="default">
                 <jsp-config/>
